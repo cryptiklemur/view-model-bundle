@@ -1,0 +1,19 @@
+{
+    "name": "aequasi/view-model-bundle",
+    "description": "Bundle to add ViewModel capabilities to Symfony2",
+    "require": {
+        "symfony/symfony": ">=2.3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aaron Scherer",
+            "email": "aequasi@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Aequasi\\Bundle\\ViewModelBundle": "src"
+        }
+    }
+}
