@@ -89,6 +89,8 @@ class IndexController implements ViewModelControllerInterface
 
   /**
    * @ViewModel(class='Index/IndexViewModel')
+   * OR
+   * @ViewModel(service='some.service.name')
    */ 
   public function indexAction()
   {
