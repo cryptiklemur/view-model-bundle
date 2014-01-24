@@ -54,7 +54,7 @@ use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModel;
 
 class IndexViewModel extends ViewModel
 {
-  protected $template = 'AcmeDeboBundle:Index:index.html.twig';
+  protected $template = 'AcmeDemoBundle:Index:index.html.twig';
 
   public function buildView($data)
   {
