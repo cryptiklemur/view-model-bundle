@@ -1,6 +1,6 @@
 <?php
 
-namespace Aequasi\Bundle\ViewModelBundle\DependencyInjection
+namespace Aequasi\Bundle\ViewModelBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
