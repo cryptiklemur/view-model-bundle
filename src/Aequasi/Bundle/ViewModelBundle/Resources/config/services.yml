@@ -6,7 +6,7 @@ parameters:
 services:
     aequasi.view_model.annotation.driver:
         class: %aequasi.view_model.annotation.driver.class%
-        arguments: [@annotation_reader, @templating, @aequasi.view_model.service.view]
+        arguments: [@service_container]
         tags: [{name: kernel.event_listener, event: kernel.controller, method: onKernelController}]
 
     aequasi.view_model.service.view:
