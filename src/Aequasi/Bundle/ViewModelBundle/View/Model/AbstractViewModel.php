@@ -3,7 +3,8 @@
 namespace Aequasi\Bundle\ViewModelBundle\View\Model;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 abstract class AbstractViewModel implements ViewModelInterface
 {
@@ -42,13 +43,13 @@ abstract class AbstractViewModel implements ViewModelInterface
 
     public function addData($key, $value)
     {
-        if (array_key_exists($this->data, $key)) {
+        if (array_key_exists($key, $this->data)) {
             throw new \InvalidArgumentException(
                 "The key `$key` is already present in the model. Either remove the key, or replace it"
             );
         }
 
-        return $this->setData($key, $value);
+        return $this->replaceData($key, $value);
     }
 
     public function replaceData($key, $value)
@@ -77,12 +78,19 @@ abstract class AbstractViewModel implements ViewModelInterface
         return $this->template;
     }
 
-    public function render($template, Response $response = null)
+    public function render($template = null, Response $response = null)
     {
-        $parameters = $this->buildView();
+        $parameters = $this->buildView($this->data);
 
-        return $this->templating->renderResponse($template, $parameters, $response);
+        if ($response === null) {
+            $response = new Response();
+        }
+        $response->headers = new ResponseHeaderBag($this->getHeaders());
+
+        return $this->templating->renderResponse($template === null ? $this->template : $template, $parameters, $response);
     }
 
-    abstract protected function buildView();
+    abstract public function getHeaders();
+
+    abstract public function buildView(array $data);
 }

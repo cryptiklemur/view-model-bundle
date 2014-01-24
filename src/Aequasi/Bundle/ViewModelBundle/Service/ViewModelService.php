@@ -5,6 +5,7 @@ namespace Aequasi\Bundle\ViewModelBundle\Service;
 use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModel;
 use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModelInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 
 class ViewModelService
@@ -22,7 +23,7 @@ class ViewModelService
     public function __construct(EngineInterface $templating)
     {
         $this->templating = $templating;
-        $this->setViewModel(new ViewModel());
+        $this->viewModel = new ViewModel($templating);
     }
 
     public function getViewModel()
@@ -72,7 +73,7 @@ class ViewModelService
         return $this->viewModel->replaceData($key, $value);
     }
 
-    public function render($template = '', Response $response = null)
+    public function render($template = null, Response $response = null)
     {
         return $this->viewModel->render($template, $response);
     }

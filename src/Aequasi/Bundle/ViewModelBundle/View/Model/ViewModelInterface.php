@@ -23,7 +23,9 @@ interface ViewModelInterface
 
     public function getTemplate();
 
-    public function render($template = '', Response $response = null);
+    public function render($template = null, Response $response = null);
 
-    protected function buildView();
+    public function getHeaders();
+
+    public function buildView(array $data);
 }

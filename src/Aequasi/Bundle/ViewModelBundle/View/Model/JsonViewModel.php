@@ -2,7 +2,7 @@
 
 namespace Aequasi\Bundle\ViewModelBundle\View\Model;
 
-class ViewModel extends AbstractViewModel 
+class JsonViewModel extends AbstractViewModel 
 {
     public function buildView(array $data)
     {
@@ -12,7 +12,7 @@ class ViewModel extends AbstractViewModel
     public function getHeaders()
     {
         return array(
-            'Content-type' => 'text/html'
+            'Content-type' => 'application/json'
         );
     }
 }
