@@ -37,7 +37,7 @@ To use, make the following directory structure in your bundle: `AcmeDemoBundle\V
 This is going to be the directory where your view models are kept. 
 
 To make a view model, create a new class that implements the [`ViewModelInterface`][0]. 
-There are some other classes in that namespace that make it easy to make your own view model. I heavily suggest extending the ['AbstractViewModel`][1].
+There are some other classes in that namespace that make it easy to make your own view model. I heavily suggest extending the [`AbstractViewModel`][1].
 There are also two classes in that namespace that extend the abstract class:
 
 * [`ViewModel`][2] - Sets a content type of `text/html` and doesnt do anything fancy to build the view
