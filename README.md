@@ -78,7 +78,8 @@ use Aequasi\Bundle\ViewModelBundle\Annotation\ViewModel;
 use Aequasi\Bundle\ViewModelBundle\Service\ViewModelService;
 use Aequasi\Bundle\ViewModelBundle\Controller\ViewModelControllerInterface;
 
-class IndexController implements ViewModelControllerInterface // Implementing this sets $this->view as an instance of the ViewModelService
+// Implementing thew ViewModelControllerInterface sets $this->view as an instance of the ViewModelService
+class IndexController implements ViewModelControllerInterface 
 {
 
   /**
@@ -92,13 +93,15 @@ class IndexController implements ViewModelControllerInterface // Implementing th
   public function indexAction()
   {
     // Some stuff....
-    // If you don't have the ViewModelControllerInterface implemented, you will need to get the service
+    // If you don't have the ViewModelControllerInterface implemented,
+    // you will need to get the service
     // $this->view = $this->container->get('aequasi.view_model.service.view');
     
     $this->getView()->add('someParameter', 'someValue');
     return $this->getView()->render(/*$templatName, $response*/);
     
-    // If you are implementing the interface, you can also not return anything and it will create the response for you
+    // If you are implementing the interface, you can also not return anything
+    // and it will create the response for you
     // It will also let you return an array that gets set as your view parameters
     return ['someParameter', 'someValue'];
   }
