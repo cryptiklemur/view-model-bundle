@@ -103,7 +103,7 @@ class IndexController implements ViewModelControllerInterface
     // If you are implementing the interface, you can also not return anything
     // and it will create the response for you
     // It will also let you return an array that gets set as your view parameters
-    return ['someParameter', 'someValue'];
+    return array('someParameter', 'someValue');
   }
   
   public function setView(ViewModelService $service)
