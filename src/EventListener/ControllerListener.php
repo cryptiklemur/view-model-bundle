@@ -2,7 +2,6 @@
 
 namespace Aequasi\Bundle\ViewModelBundle\EventListener;
 
-use Aequasi\Bundle\ViewModelBundle\Controller\ViewModelControllerInterface;
 use Aequasi\Bundle\ViewModelBundle\Service\ViewModelService;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -31,7 +30,7 @@ class ControllerListener
      */
     public function postController(GetResponseForControllerResultEvent $event)
     {
-        if (!$this->viewModelService->getViewModel() === null) {
+        if ($this->viewModelService->getViewModel() === null) {
             return;
         }
 
