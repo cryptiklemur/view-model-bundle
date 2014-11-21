@@ -30,7 +30,7 @@ class ControllerListener
      */
     public function postController(GetResponseForControllerResultEvent $event)
     {
-        if ($this->viewModelService->getViewModel() === null) {
+        if ($this->viewModelService->getViewModel()->getTemplate() === null) {
             return;
         }
 
