@@ -12,8 +12,8 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Aequasi\\Bundle\\ViewModelBundle": "src"
+        "psr-4": {
+            "Aequasi\\Bundle\\ViewModelBundle\\": "src"
         }
     }
 }

@@ -10,6 +10,9 @@ use Aequasi\Bundle\ViewModelBundle\Service\ViewModelService;
 use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModelInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @author Aaron Scherer <aequasi@gmail.com>
+ */
 class AnnotationDriver
 {
 
@@ -33,6 +36,9 @@ class AnnotationDriver
      */
     protected $viewModelService;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container        = $container;
@@ -41,6 +47,9 @@ class AnnotationDriver
         $this->viewModelService = $container->get('aequasi.view_model.service.view');
     }
 
+    /**
+     * @param FilterControllerEvent $event
+     */
     public function onKernelController(FilterControllerEvent $event)
     {
 
@@ -58,7 +67,7 @@ class AnnotationDriver
                     if (!class_exists($class)) {
                         $bundle   = $this->getBundleName($object);
                         $oldClass = $class;
-                        $class    = sprintf('%s\View\Model\%s', $bundle, $class);
+                        $class    = sprintf('%s\View\%s', $bundle, $class);
                         if (!class_exists($class)) {
                             throw new \InvalidArgumentException(sprintf(
                                 "Neither `%s`, nor `%s` are valid classes. Make sure you use the whole name of the model, or that its placed in your bundle's `View\\Model\\` directory",
@@ -90,6 +99,11 @@ class AnnotationDriver
         return $this->container->get($id);
     }
 
+    /**
+     * @param \ReflectionObject $controller
+     *
+     * @return mixed
+     */
     private function getBundleName(\ReflectionObject $controller)
     {
         return str_replace('\Controller', '', $controller->getNamespaceName());

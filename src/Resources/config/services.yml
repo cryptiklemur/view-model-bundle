@@ -17,5 +17,4 @@ services:
         class: %aequasi.view_model.listener.controller.class%
         arguments: [@aequasi.view_model.service.view]
         tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: preController }
             - { name: kernel.event_listener, event: kernel.view, method: postController }

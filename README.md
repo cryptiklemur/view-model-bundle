@@ -1,7 +1,7 @@
 view-model-bundle
 =================
 
-Bundle to add MVCVM capabilities to Symfony2
+Bundle to add View Model capabilities to Symfony2
 
 ## Requirements
 
@@ -15,7 +15,7 @@ Requires
 In your project root:
 
 ```sh
-composer require aequasi/view-model-bundle dev-master
+composer require aequasi/view-model-bundle ~2.0.0
 ```
 
 In your `app/AppKernel.php`
@@ -48,7 +48,7 @@ Example:
 ```php
 <?php
 
-namespace Acme\DemoBundle\View\Model\Index;
+namespace Acme\DemoBundle\View\Index;
 
 use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModel;
 
@@ -64,7 +64,7 @@ class IndexViewModel extends ViewModel
 }
 ```
 
-You dont have to follow the same namespace structure, but it allows for a cleaner structure. This view model would be the view model for the IndexController's indexAction.
+You don't have to follow the same namespace structure, but it allows for a cleaner structure. This view model would be the view model for the IndexController's indexAction.
 
 #### To Use the View Model
 
