@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * This file is part of view-model-bundle
+ *
+ * (c) Aaron Scherer <aequasi@gmail.com>
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE
+ */
+
 namespace Aequasi\Bundle\ViewModelBundle\View\Model;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
@@ -11,9 +20,16 @@ use \Symfony\Component\HttpFoundation\Response;
 interface ViewModelInterface
 {
     /**
-     * @param EngineInterface $templating
+     * @return EngineInterface
      */
-    public function __construct(EngineInterface $templating);
+    public function getTemplating();
+
+    /**
+     * @param EngineInterface $engineInterface
+     *
+     * @return ViewModelInterface
+     */
+    public function setTemplating(EngineInterface $engineInterface);
 
     /**
      * @param array $data

@@ -1,14 +1,8 @@
 parameters:
-    aequasi.view_model.annotation.driver.class: Aequasi\Bundle\ViewModelBundle\Annotation\Driver\AnnotationDriver
     aequasi.view_model.listener.controller.class: Aequasi\Bundle\ViewModelBundle\EventListener\ControllerListener
     aequasi.view_model.service.view.class: Aequasi\Bundle\ViewModelBundle\Service\ViewModelService
 
 services:
-    aequasi.view_model.annotation.driver:
-        class: %aequasi.view_model.annotation.driver.class%
-        arguments: [@service_container]
-        tags: [{name: kernel.event_listener, event: kernel.controller, method: onKernelController}]
-
     aequasi.view_model.service.view:
         class: %aequasi.view_model.service.view.class%
         arguments: [@templating]

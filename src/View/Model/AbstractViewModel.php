@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of view-model-bundle
+ *
+ * (c) Aaron Scherer <aequasi@gmail.com>
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE
+ */
+
 namespace Aequasi\Bundle\ViewModelBundle\View\Model;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -21,7 +30,6 @@ abstract class AbstractViewModel implements ViewModelInterface
      */
     protected $data = [];
 
-
     /**
      * @var string
      */
@@ -32,7 +40,27 @@ abstract class AbstractViewModel implements ViewModelInterface
      */
     public function __construct(EngineInterface $templating)
     {
+        $this->setTemplating($templating);
+    }
+
+    /**
+     * @return EngineInterface
+     */
+    public function getTemplating()
+    {
+        return $this->templating;
+    }
+
+    /**
+     * @param EngineInterface $templating
+     *
+     * @return AbstractViewModel
+     */
+    public function setTemplating(EngineInterface $templating)
+    {
         $this->templating = $templating;
+
+        return $this;
     }
 
     /**
@@ -127,14 +155,12 @@ abstract class AbstractViewModel implements ViewModelInterface
      */
     public function render($template = null, Response $response = null)
     {
-        $parameters = $this->buildView($this->data);
-
-        if ($response === null) {
-            $response = new Response();
-        }
+        $parameters        = $this->buildView($this->data);
+        $response          = $response === null ? new Response() : $response;
         $response->headers = new ResponseHeaderBag($this->getHeaders());
+        $template          = $template === null ? $this->getTemplate() : $template;
 
-        return $this->templating->renderResponse($template === null ? $this->template : $template, $parameters, $response);
+        return $this->templating->renderResponse($template, $parameters, $response);
     }
 
     /**

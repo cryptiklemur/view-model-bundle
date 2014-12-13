@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of view-model-bundle
+ *
+ * (c) Aaron Scherer <aequasi@gmail.com>
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE
+ */
+
 namespace Aequasi\Bundle\ViewModelBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -10,10 +19,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class AequasiViewModelExtension extends Extension
 {
     /**
-     * Loads the configs for Cache and puts data into the container
-     *
-     * @param array            $configs   Array of configs
-     * @param ContainerBuilder $container Container Object
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * This file is part of view-model-bundle
+ *
+ * (c) Aaron Scherer <aequasi@gmail.com>
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE
+ */
+
 namespace Aequasi\Bundle\ViewModelBundle\Service;
 
-use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModel;
+use Aequasi\Bundle\ViewModelBundle\View\Model\HtmlViewModel;
 use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModelInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -28,7 +37,7 @@ class ViewModelService
     public function __construct(EngineInterface $templating)
     {
         $this->templating = $templating;
-        $this->viewModel = new ViewModel($templating);
+        $this->viewModel = new HtmlViewModel($templating);
     }
 
     /**

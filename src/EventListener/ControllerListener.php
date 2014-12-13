@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of view-model-bundle
+ *
+ * (c) Aaron Scherer <aequasi@gmail.com>
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE
+ */
+
 namespace Aequasi\Bundle\ViewModelBundle\EventListener;
 
 use Aequasi\Bundle\ViewModelBundle\Service\ViewModelService;

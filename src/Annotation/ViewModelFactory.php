@@ -16,17 +16,17 @@ namespace Aequasi\Bundle\ViewModelBundle\Annotation;
  *
  * @Annotation
  */
-class ViewModel
+class ViewModelFactory
 {
     /**
-     * @type string
+     * @type
      */
-    private $class;
+    private $factory;
 
     /**
-     * @type string
+     * @type array
      */
-    private $service;
+    private $arguments = [];
 
     /**
      * @param array $data
@@ -38,51 +38,35 @@ class ViewModel
         if (count(array_keys($data)) > 1) {
             throw new \Exception(
                 "Your ViewModel declaration should not have named variables. ".
-                "Just pass your class/service, and arguments (if any)."
+                "Just pass your factory service, and arguments."
             );
         }
 
         if (!isset($data['value'])) {
-            $data['value'] = 'Aequasi\Bundle\ViewModelBundle\View\Model\HtmlViewModel';
+            throw new \Exception("You must specify a service id to use with the factory");
         }
 
         $this->parseValue($data['value']);
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getClass()
+    public function getArguments()
     {
-        return $this->class;
+        return $this->arguments;
     }
 
     /**
      * @return string
      */
-    public function getService()
+    public function getFactory()
     {
-        return $this->service;
+        return $this->factory;
     }
 
     /**
-     * @return bool
-     */
-    public function hasClass()
-    {
-        return isset($this->class);
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasService()
-    {
-        return isset($this->service);
-    }
-
-    /**
-     * @param string|array $value
+     * @param array $value
      *
      * @return void
      *
@@ -90,18 +74,18 @@ class ViewModel
      */
     private function parseValue($value)
     {
-        if (strpos($value, '@') === 0) {
-            $this->service = ltrim($value, '@');
-
-            return;
+        if (!is_array($value)) {
+            throw new \Exception(
+                "Value for ViewModelFactory should be the service id, and arguments. ".
+                "ex: @ViewModelFactory(\"@serviceId\", {\"argumentOne\", \"@service\"})"
+            );
         }
 
-        if (!class_exists($value)) {
-            throw new \Exception("Class \"{$value}\" does not exist.");
+        if (strpos($value[0], '@') !== 0) {
+            throw new \Exception("{$value[0]} is not a valid service id. It must start with a @.");
         }
 
-        $this->class = $value;
-
-        return;
+        $this->factory = ltrim($value[0], '@');
+        $this->arguments = $value[1];
     }
 }
