@@ -15,7 +15,7 @@ Requires
 In your project root:
 
 ```sh
-composer require aequasi/view-model-bundle ~2.0.0
+composer require aequasi/view-model-bundle ~3.0.0
 ```
 
 In your `app/AppKernel.php`
@@ -33,14 +33,11 @@ public function registerBundles()
 
 ## Usage
 
-To use, make the following directory structure in your bundle: `AcmeDemoBundle\View\Model\`
-This is going to be the directory where your view models are kept. 
-
 To make a view model, create a new class that implements the [`ViewModelInterface`][0]. 
 There are some other classes in that namespace that make it easy to make your own view model. I heavily suggest extending the [`AbstractViewModel`][1].
 There are also two classes in that namespace that extend the abstract class:
 
-* [`ViewModel`][2] - Sets a content type of `text/html` and doesnt do anything fancy to build the view
+* [`HtmlViewModel`][2] - Sets a content type of `text/html` and doesnt do anything fancy to build the view
 * [`JsonViewModel`][3] - Sets a content type of `application/json` and doesnt do anything fancy to build the view
 
 Example:
@@ -50,9 +47,9 @@ Example:
 
 namespace Acme\DemoBundle\View\Index;
 
-use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModel;
+use Aequasi\Bundle\ViewModelBundle\View\Model\HtmlViewModel;
 
-class IndexViewModel extends ViewModel
+class IndexViewModel extends HtmlViewModel
 {
   protected $template = 'AcmeDemoBundle:Index:index.html.twig';
 
@@ -68,7 +65,7 @@ You don't have to follow the same namespace structure, but it allows for a clean
 
 #### To Use the View Model
 
-Use the [`@ViewModel`][4] Annotation in your action:
+Use the [`@ViewModel`][4] Annotation in your action OR you can use the [`@ViewModelFactory`][5] Annotation:
 
 ```php
 
@@ -88,9 +85,10 @@ class IndexController implements ViewModelControllerInterface
   private $view;
 
   /**
-   * @ViewModel(class='Index/IndexViewModel')
+   * @ViewModel("Acme\DemoBundle\View\Model\Index\IndexViewModel")
    * OR
-   * @ViewModel(service='some.service.name')
+   * @ViewModel("@some.service.name")
+   * @ViewModelFactory("@service.id", {"argumentOne", "argumentTwo"}) // You can also use a class name. The arguments are for you to decide what view model to use
    */ 
   public function indexAction()
   {
@@ -102,8 +100,7 @@ class IndexController implements ViewModelControllerInterface
     $this->getView()->add('someParameter', 'someValue');
     return $this->getView()->render(/*$templatName, $response*/);
     
-    // If you are implementing the interface, you can also not return anything
-    // and it will create the response for you
+    // You can also not return anything and it will create the response for you
     // It will also let you return an array that gets set as your view parameters
     return array('someParameter', 'someValue');
   }
@@ -120,8 +117,12 @@ class IndexController implements ViewModelControllerInterface
 }
 ```
 
+###### A ViewModelFactory must implement [ViewModelFactoryInterface][6] and the create method must return a [ViewModelInterface][0].
+
 [0]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/View/Model/ViewModelInterface.php
 [1]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/View/Model/AbstractViewModel.php
-[2]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/View/Model/ViewModel.php
+[2]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/View/Model/HtmlViewModel.php
 [3]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/View/Model/JsonViewModel.php
 [4]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/Annotation/ViewModel.php
+[5]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/Annotation/ViewModelFactory.php
+[6]: https://github.com/aequasi/view-model-bundle/blob/master/src/Aequasi/Bundle/ViewModelBundle/Factory/ViewModelFactoryInterface.php
