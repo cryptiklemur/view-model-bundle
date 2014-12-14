@@ -15,7 +15,7 @@ Requires
 In your project root:
 
 ```sh
-composer require aequasi/view-model-bundle ~3.0.0
+composer require aequasi/view-model-bundle ~4.0.0
 ```
 
 In your `app/AppKernel.php`
