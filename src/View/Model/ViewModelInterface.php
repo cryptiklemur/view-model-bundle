@@ -12,6 +12,7 @@
 namespace Aequasi\Bundle\ViewModelBundle\View\Model;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,6 +31,18 @@ interface ViewModelInterface
      * @return ViewModelInterface
      */
     public function setTemplating(EngineInterface $engineInterface);
+
+    /**
+     * @return RequestStack
+     */
+    public function getRequestStack();
+
+    /**
+     * @param RequestStack $requestStack
+     *
+     * @return ViewModelInterface
+     */
+    public function setRequestStack(RequestStack $requestStack);
 
     /**
      * @param array $data

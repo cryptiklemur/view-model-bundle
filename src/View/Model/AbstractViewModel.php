@@ -12,6 +12,7 @@
 namespace Aequasi\Bundle\ViewModelBundle\View\Model;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -26,6 +27,11 @@ abstract class AbstractViewModel implements ViewModelInterface
     protected $templating;
 
     /**
+     * @type RequestStack
+     */
+    protected $requestStack;
+
+    /**
      * @var array
      */
     protected $data = [];
@@ -36,11 +42,33 @@ abstract class AbstractViewModel implements ViewModelInterface
     protected $template;
 
     /**
+     * @param RequestStack    $requestStack
      * @param EngineInterface $templating
      */
-    public function __construct(EngineInterface $templating)
+    public function __construct(RequestStack $requestStack, EngineInterface $templating)
     {
+        $this->setRequestStack($requestStack);
         $this->setTemplating($templating);
+    }
+
+    /**
+     * @return RequestStack
+     */
+    public function getRequestStack()
+    {
+        return $this->requestStack;
+    }
+
+    /**
+     * @param RequestStack $requestStack
+     *
+     * @return AbstractViewModel
+     */
+    public function setRequestStack(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+
+        return $this;
     }
 
     /**
@@ -64,6 +92,16 @@ abstract class AbstractViewModel implements ViewModelInterface
     }
 
     /**
+     * @param null $key
+     *
+     * @return array
+     */
+    public function getData($key = null)
+    {
+        return $key === null ? $this->data : $this->data[$key];
+    }
+
+    /**
      * @param array $data
      *
      * @return $this
@@ -73,16 +111,6 @@ abstract class AbstractViewModel implements ViewModelInterface
         $this->data = $data;
 
         return $this;
-    }
-
-    /**
-     * @param null $key
-     *
-     * @return array
-     */
-    public function getData($key = null)
-    {
-        return $key === null ? $this->data : $this->data[$key];
     }
 
     /**
@@ -128,6 +156,14 @@ abstract class AbstractViewModel implements ViewModelInterface
     }
 
     /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
      * @param $template
      *
      * @return $this
@@ -137,14 +173,6 @@ abstract class AbstractViewModel implements ViewModelInterface
         $this->template = $template;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return $this->template;
     }
 
     /**

@@ -13,8 +13,9 @@ namespace Aequasi\Bundle\ViewModelBundle\Service;
 
 use Aequasi\Bundle\ViewModelBundle\View\Model\HtmlViewModel;
 use Aequasi\Bundle\ViewModelBundle\View\Model\ViewModelInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
@@ -32,12 +33,19 @@ class ViewModelService
     private $viewModel;
 
     /**
+     * @type RequestStack
+     */
+    private $requestStack;
+
+    /**
+     * @param RequestStack    $requestStack
      * @param EngineInterface $templating
      */
-    public function __construct(EngineInterface $templating)
+    public function __construct(RequestStack $requestStack, EngineInterface $templating)
     {
-        $this->templating = $templating;
-        $this->viewModel = new HtmlViewModel($templating);
+        $this->templating   = $templating;
+        $this->viewModel    = new HtmlViewModel($requestStack, $templating);
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -56,7 +64,7 @@ class ViewModelService
     public function setViewModel(ViewModelInterface $viewModel)
     {
         $data = $this->get();
-        
+
         $this->viewModel = $viewModel;
         if (!empty($data)) {
             $this->set($data);
@@ -134,5 +142,21 @@ class ViewModelService
     public function render($template = null, Response $response = null)
     {
         return $this->viewModel->render($template, $response);
+    }
+
+    /**
+     * @return RequestStack
+     */
+    public function getRequestStack()
+    {
+        return $this->requestStack;
+    }
+
+    /**
+     * @return EngineInterface
+     */
+    public function getTemplating()
+    {
+        return $this->templating;
     }
 }
