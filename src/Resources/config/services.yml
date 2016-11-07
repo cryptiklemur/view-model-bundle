@@ -4,11 +4,11 @@ parameters:
 
 services:
     aequasi.view_model.service.view:
-        class: %aequasi.view_model.service.view.class%
-        arguments: [@request_stack, @templating]
+        class: "%aequasi.view_model.service.view.class%"
+        arguments: ["@request_stack", "@templating"]
 
     aequasi.view_model.listener.controller:
-        class: %aequasi.view_model.listener.controller.class%
-        arguments: [@aequasi.view_model.service.view]
+        class: "%aequasi.view_model.listener.controller.class%"
+        arguments: ["@aequasi.view_model.service.view"]
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: postController }
