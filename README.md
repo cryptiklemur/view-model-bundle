@@ -3,6 +3,8 @@ view-model-bundle
 
 Bundle to add View Model capabilities to Symfony2
 
+# This bundle is not receiving any more support.    
+
 ## Requirements
 
 Requires 
